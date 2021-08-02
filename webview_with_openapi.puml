@@ -1,0 +1,26 @@
+@startuml
+actor User
+User -> MobileApp: (1) Open mobile app then click xxx service
+MobileApp -> AuthenticationService : (1.1) Get access_token with [xxx,profile,payment] scope
+AuthenticationService --> MobileApp : (1.2) return access_token with [xxx,profile,payment] scope
+
+MobileApp -> WebView : (1.3) Open WebView with access_token
+WebView -> ProfileService: (1.4) Get profile from resource server
+ProfileService --> ProfileService : (1.5) Check access_token has profile scope
+ProfileService --> WebView : (1.6) return user profile
+
+WebView --> User : (1.7) render xxx service with user profile
+
+User -> WebView: (2) User browse xxx WebView
+WebView -> YourOwnService: (2.1) Do your own business
+YourOwnService --> YourOwnService: (2.2) Check access_token has xxx scope and Do processing your service
+YourOwnService --> WebView: (2.3) return your business data
+WebView --> User : render your business data
+
+User -> WebView : (3) User click payment
+WebView -> PaymentService: (3.1) Call payment with access_token
+PaymentService --> PaymentService: (3.2)  Check access_token has payment scope and Do payment txn
+PaymentService --> WebView: (3.3) return payment txn status
+WevView --> User: render payment status to user
+
+@enduml
