@@ -1,0 +1,20 @@
+@startuml
+!include common.puml
+
+== Card ==
+autonumber 1.1
+Client -> PaymentPlatform: Add card
+note left
+    - Card number
+    - Holder name
+    - CVC
+    - Expiry date
+end note
+PaymentPlatform -> PaymentPlatform: Tokenize and Save DB
+PaymentPlatform -> Client: Card token
+
+autonumber 2.1
+Client -> Merchant: Store card token
+Merchant -> Merchant: Save card token
+Merchant --> Client: Response OK
+@enduml

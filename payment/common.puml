@@ -1,0 +1,11 @@
+' File: commons.puml
+
+@startuml
+hide footbox
+participant Client
+participant "Merchant Server" as Merchant
+'box PaymentPlatform #LightBlue
+participant "Payment Server" as PaymentPlatform
+'end box
+
+@enduml

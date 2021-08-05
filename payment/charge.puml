@@ -1,0 +1,14 @@
+@startuml
+!include common.puml
+
+== Charge ==
+autonumber 3.1
+Client -> Merchant: Charge
+activate Merchant
+Merchant -> PaymentPlatform: Charge with card token
+PaymentPlatform -> PaymentPlatform: Do charge
+PaymentPlatform --> Merchant: Return
+Merchant --> Client: Return
+deactivate Merchant
+
+@enduml
