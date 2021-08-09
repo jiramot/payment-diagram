@@ -1,0 +1,41 @@
+@startuml
+' define state
+State Expired
+Expired: capture: false
+Expired: expired: true
+
+State Pending
+Pending: authorized: true
+Pending: status: pending
+Pending: capture: false
+
+State Reversed
+Reversed: status: reversed
+Reversed: capture: false
+
+State Successful
+Successful : status: successful
+Successful : capture: true
+
+State Voided
+Voided : status: successful
+Voided : capture: true
+Voided : refunds status: closed
+
+State Dispute_Open
+Dispute_Open: charge status: successful
+Dispute_Open: dispute status: open
+
+' diagram
+[*] --> Pending: Create a charge
+Pending --> Expired: Capture\nafter expire
+Expired --> [*]
+Pending --> Successful: Capture
+Pending --> Reversed: Reversed
+Reversed --> [*]
+
+Successful --> Voided: void
+Voided --> [*]
+Successful -left-> Dispute_Open: open dispute
+Successful --> [*]
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+[*] --> Dispute_Open: dispute
+!include dispute_state.puml!dispute
+@enduml
+
+@startuml(id=dispute)
+' define state
+State Dispute_Open
+Dispute_Open: charge status: successful
+Dispute_Open: dispute status: open
+
+State Dispute_Lost
+Dispute_Lost : charge status: successful
+Dispute_Lost : dispute status: lost
+
+State Dispute_Pending
+Dispute_Pending: charge status: successful
+Dispute_Pending: dispute status: pending
+
+State Dispute_Won
+Dispute_Won: charge status: successful
+Dispute_Won: dispute status: won
+
+' diagram
+Dispute_Open --> Dispute_Pending: decline
+Dispute_Open --> Dispute_Lost: accept
+Dispute_Lost --> [*]
+
+Dispute_Pending --> Dispute_Won: won
+Dispute_Pending --> Dispute_Lost: Lost
+Dispute_Won --> [*]
+@enduml
